@@ -43,7 +43,10 @@ class QLearningAgent(ReinforcementAgent):
         ReinforcementAgent.__init__(self, **args)
 
         "*** YOUR CODE HERE ***"
+        #Iulia Anca
+        self.qValues = util.Counter()
 
+    #Iulia Anca
     def getQValue(self, state, action):
         """
           Returns Q(state,action)
@@ -51,9 +54,13 @@ class QLearningAgent(ReinforcementAgent):
           or the Q node value otherwise
         """
         "*** YOUR CODE HERE ***"
-        util.raiseNotDefined()
+        if (state, action) in self.qValues:
+          return self.qValues[(state, action)]
+        return 0.0
+        # util.raiseNotDefined()
 
 
+    #Iulia Anca
     def computeValueFromQValues(self, state):
         """
           Returns max_action Q(state,action)
@@ -62,8 +69,20 @@ class QLearningAgent(ReinforcementAgent):
           terminal state, you should return a value of 0.0.
         """
         "*** YOUR CODE HERE ***"
-        util.raiseNotDefined()
+        legalActions = self.getLegalActions(state)
+        if not legalActions:
+            return 0.0
 
+        maxValue = float('-inf')
+        for actiune in legalActions:
+            qValue = self.getQValue(state, actiune)
+            if qValue > maxValue:
+                maxValue = qValue
+
+        return maxValue
+        # util.raiseNotDefined()
+
+    #Iulia Anca
     def computeActionFromQValues(self, state):
         """
           Compute the best action to take in a state.  Note that if there
@@ -71,8 +90,20 @@ class QLearningAgent(ReinforcementAgent):
           you should return None.
         """
         "*** YOUR CODE HERE ***"
-        util.raiseNotDefined()
+        legalActions = self.getLegalActions(state)
+        if not legalActions:
+            return None
+        
+        best_value = self.computeValueFromQValues(state)
+        best_actions = []
+        for action in legalActions:
+            if self.getQValue(state, action) == best_value:
+                best_actions.append(action)
 
+        return random.choice(best_actions)
+        # util.raiseNotDefined()
+
+    #Iulia Anca
     def getAction(self, state):
         """
           Compute the action to take in the current state.  With
@@ -88,10 +119,17 @@ class QLearningAgent(ReinforcementAgent):
         legalActions = self.getLegalActions(state)
         action = None
         "*** YOUR CODE HERE ***"
-        util.raiseNotDefined()
+        if not legalActions:
+            action = None
+        if util.flipCoin(self.epsilon):
+            action = random.choice(legalActions)
+        else:
+            action = self.computeActionFromQValues(state)
+        # util.raiseNotDefined()
 
         return action
 
+    #Iulia Anca
     def update(self, state, action, nextState, reward):
         """
           The parent class calls this to observe a
@@ -102,7 +140,9 @@ class QLearningAgent(ReinforcementAgent):
           it will be called on your behalf
         """
         "*** YOUR CODE HERE ***"
-        util.raiseNotDefined()
+        sample = reward + self.discount * self.computeValueFromQValues(nextState)
+        self.qValues[(state, action)] = (1 - self.alpha) * self.getQValue(state, action) + self.alpha * sample
+        # util.raiseNotDefined()
 
     def getPolicy(self, state):
         return self.computeActionFromQValues(state)
