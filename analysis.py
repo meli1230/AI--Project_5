@@ -19,9 +19,10 @@
 # Set the given parameters to obtain the specified policies through
 # value iteration.
 
+# @Author: Melisa Marian
 def question2():
     answerDiscount = 0.9
-    answerNoise = 0.2
+    answerNoise = 0.0 #lower the noise in order to cross the bridge
     return answerDiscount, answerNoise
 
 #Iulia Anca
