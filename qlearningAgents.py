@@ -225,7 +225,7 @@ class ApproximateQAgent(PacmanQAgent):
 
         # @Author: Melisa Marian
 
-        feature_set = self.featExtractor.getFeatures (state, action) #get the features array for this stat and action
+        feature_set = self.featExtractor.getFeatures (state, action) #get the features array for this state and action
 
         q_value_current = self.getQValue(state, action) #get the current q_value
         q_value_next = self.computeValueFromQValues(nextState) #get the next q_value
