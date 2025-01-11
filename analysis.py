@@ -67,10 +67,13 @@ def question3e():
 
 #Iulia Anca
 def question8():
-    answerEpsilon = 0.05
-    answerLearningRate = 0.8
-    return answerEpsilon, answerLearningRate
+    #Iulia Anca
+    # answerEpsilon = 0.05
+    # answerLearningRate = 0.8
+    # return answerEpsilon, answerLearningRate
     # If not possible, return 'NOT POSSIBLE'
+    # @Author: Melisa Marian
+    return 'NOT POSSIBLE' #Iulia found values for q8, but no values that work for q8 work for q7 => not possible
 
 if __name__ == '__main__':
     print('Answers to analysis questions:')
